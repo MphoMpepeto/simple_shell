@@ -1,0 +1,13 @@
+oid fork(params)
+{
+   check wether a command exist - access to check if dir is valid
+   IF not valid
+	print error("");
+   IF valid
+     we call fork
+     iF not process
+	print error process not created
+     IF process
+     	we execute command using execve
+
+}
