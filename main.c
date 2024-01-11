@@ -9,102 +9,90 @@ int main(void);
 
 int main(void)
 {
-	bool interactive_shell;
+	char *getline_num, *pokemon, *prompt = "(Tom Mpho)$ ";
 
-	char *get_line_val;
+	char **argv;
 
-	char **cmd_args;
+	int i;
 
-	char *token;
-
-	int arg_idx;
-
-	char *usr_prmpt = "(Genius Excel)$ ";
-
-	interactive_shell = isatty(fileno(stdin));
+	int interactive_mode = isatty(fileno(stdin));
+	
+	char* semicolon_position;
 
 
-	while (1)
+	while (true)
 	{
-
-		/*check for interactive shell mode*/
-		if (interactive_shell)
+		switch (interactive_mode) 
 		{
-			_printf("%s", usr_prmpt);
+		       	case 1:
+				_printf("%s", prompt);
+				fflush(stdout);
+				getline_num = cstm_getline();
 
-			fflush(stdout);
+				if (getline_num == NULL)
+			       	{
+					break;
+        			}
+       				 break;
 
-			get_line_val = cstm_getline();
+    			case 0:
+        			getline_num = cstm_non_interactive_getline();
+			       
+				if (getline_num == NULL) {
+            				break;
+        			}
+        			break;
 
-			if (get_line_val == NULL)
-			{
-				break; /*Exit interactive mode*/
-			}
-
-			/*printf("(Favour Shell)%s$ ", currt_wrk_dir); */
-		}
-		else /*Indicates shell is in non-interactive mode*/
-		{
-			get_line_val = cstm_non_interactive_getline();
-
-			if (get_line_val == NULL) /*Exit non-interactive mode*/
-			{
-				/*Close file and exit the non-interacitve mode*/
-
-				break; /*Switche to interactive shell mode*/
-			}
+    			default:
+        			break;
 		}
 
 		/*Check if multiple commands were enetered*/
-		if (strstr(get_line_val, ";") != NULL)
-		{
-			/*			cmd_seperator(get_line_val, currt_wrk_dir, usr_prmpt);*/
+		semicolon_position = strstr(getline_num, ";");
 
-			free(get_line_val);
-			continue;
+		if (semicolon_position != NULL) {
+    			free(getline_num);
+    			continue;
 		}
-		/*Dynamically Allocate memory for the arguments to be executed*/
-		cmd_args = malloc(sizeof(char *) * (MAX_ARGS + 1));
 
-		if (cmd_args == NULL)
+		/*Dynamically Allocate memory for the arguments to be executed*/
+		argv = malloc(sizeof(char *) * (MAX_ARGS + 1));
+
+		if (argv == NULL)
 		{
 			perror("Failed to Allocate Memory");
 			exit(EXIT_FAILURE);
 		}
 
+		i = 0;
+		pokemon = cstm_strtok(getline_num, " \t\r\n\a");
 
-		arg_idx = 0;
-
-		token = cstm_strtok(get_line_val, " \t\r\n\a");
-
-		while (token != NULL && arg_idx < MAX_ARGS)
+		while (pokemon != NULL && i < MAX_ARGS)
 		{
-			cmd_args[arg_idx] = token;
-
-			arg_idx++;
-
-			token = cstm_strtok(NULL, " \t\r\n\a");
+			argv[i] = pokemon;
+			i++;
+			pokemon = cstm_strtok(NULL, " \t\r\n\a");
 		}
 
-		cmd_args[arg_idx] = NULL;
+		argv[i] = NULL;
 
-		if (arg_idx == 0)
+		if (i == 0)
 		{
-			free(get_line_val);
-			free(cmd_args);
+			free(getline_num);
+			free(argv);
 
 			continue;
 		}
 
-		execute_builtin_command(cmd_args, get_line_val);
+		execute_builtin_command(argv, getline_num);
 
-		free(get_line_val);
-		free(cmd_args);
+		free(getline_num);
+		free(argv);
 
-		if (!interactive_shell)
+	      /*if (!interactive_shell)
 		{
 			break;
-		}
+		} */
 	}
 
 	return (0);
