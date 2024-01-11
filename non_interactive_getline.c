@@ -1,90 +1,70 @@
 #include "shell.h"
 
 /**
-* cstm_non_interactive_getline - this is the custom getline function for..
-* .. the non-interactive shell, it works like the traditional getline but uses
-* the read function to get the input from the file stream.
-* Return: On succes, it returns the pointer to the array of characters
-* read from the filestream.
+* non_interactive_reader - Read input from the user in non interactive mode.
+* Return: On succes, it returns pointer to array of characters.
 */
-char *cstm_non_interactive_getline(void);
+char *non_interactive_reader(void);
 
-char *cstm_non_interactive_getline(void)
+char *non_interactive_reader(void)
 {
-	ssize_t num_read_val;
+	ssize_t value_read;
 
-	char *buffer_ptr;
+	char *buff, *loc_ptr;
 
-	char *mem_ptr;
+	int i = 0, max_size = 1024;
 
-/*	size_t buffer_ptr_len = 0;*/
+	char ch;
 
-	int idx = 0;
+	buff = malloc(max_size * sizeof(char));
 
-	int maximum_size = 1024;
-
-	char c;
-
-	buffer_ptr = malloc(maximum_size * sizeof(char));
-
-	if (buffer_ptr == NULL)
+	if (buff == NULL)
 	{
-		perror("Failed to allocate memory");
-
-		exit(1);
+		print_error();
 	}
 
-	while ((num_read_val = read(STDIN_FILENO, &c, 1)) > 0)
+	value_read  = read(STDIN_FILENO, &ch, 1);
+
+	while ((value_read) > 0)
 	{
-		if (c == EOF || c == '\n')
+		if (ch == EOF || ch == '\n')
 		{
-			/*Stops the loop*/
 			break;
 		}
 
-		buffer_ptr[idx++] = c; /*Populate the allocated memory with c*/
+		buff[i++] = ch; 
 
 
-		/*Check if memory allocated is enough*/
-		if (idx >= (maximum_size - 1))
+		if (i >= (max_size - 1))
 		{
-			maximum_size += 1024;
+			max_size += 1024;
 
-			mem_ptr = realloc(buffer_ptr, maximum_size);
+			loc_ptr = realloc(buff, max_size);
 
-			if (mem_ptr == NULL)
+			if (loc_ptr == NULL)
 			{
-				perror("Reallocation of memory failed");
-
-				free(buffer_ptr); /*free alloc mem*/
-
-				exit(1);
+				print_error();
+				free(buff);
 			}
-			/*Memory Reallocation successful update bfr_ptr*/
 
-			buffer_ptr = mem_ptr;
+			buff = loc_ptr;
 		}
 	}
-
-
-	if (num_read_val == -1) /*read failed*/
-	{
-		perror("Read failed");
-		free(buffer_ptr); /*Free allocated mem*/
-		exit(1);
+	
+	switch (value_read) {
+		case -1:
+			print_error();
+			free(buff);
+			break;
+		case 0:
+			free(buff);
+			exit(1);
+			break;
+		default:
+			break;
 	}
 
+	buff[i] = '\0';
 
-	/*Check if no characters were read*/
-	if (num_read_val == 0)
-	{
-		free(buffer_ptr);
-
-		exit(1);
-	}
-
-	/*Null terminat the buffer*/
-	buffer_ptr[idx] = '\0';
-
-	return (buffer_ptr);
+	return (buff);
 }

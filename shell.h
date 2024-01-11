@@ -25,12 +25,13 @@ int shell_setenv(const char *name, const char *value);
 int shell_unsetenv(const char *name);
 int shell_cd(const char *directory);
 void check_eof(char *buff);
+void print_error(void);
 
 /*Custom Function prototypes*/
 void call_and_execute(char *args[], char *get_line_val);
 char *my_getline(void);
 char *cstm_strtok(char *str, const char *delim);
-char *cstm_non_interactive_getline(void);
+char *non_interactive_reader(void);
 char *cstm_getenv(char *env_name);
 
 void change_dir(char *cmd_args[], char *currt_wrk_dir);

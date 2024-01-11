@@ -36,7 +36,7 @@ int main(void)
        				 break;
 
     			case 0:
-        			getline_num = cstm_non_interactive_getline();
+        			getline_num = non_interactive_reader();
 			       
 				if (getline_num == NULL) {
             				break;
@@ -47,7 +47,6 @@ int main(void)
         			break;
 		}
 
-		/*Check if multiple commands were enetered*/
 		semicolon_position = strstr(getline_num, ";");
 
 		if (semicolon_position != NULL) {
@@ -55,7 +54,6 @@ int main(void)
     			continue;
 		}
 
-		/*Dynamically Allocate memory for the arguments to be executed*/
 		argv = malloc(sizeof(char *) * (MAX_ARGS + 1));
 
 		if (argv == NULL)
