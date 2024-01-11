@@ -24,11 +24,11 @@ void execute_builtin_command(char **cmd_args, char *get_line_val);
 int shell_setenv(const char *name, const char *value);
 int shell_unsetenv(const char *name);
 int shell_cd(const char *directory);
-
+void check_eof(char *buff);
 
 /*Custom Function prototypes*/
 void call_and_execute(char *args[], char *get_line_val);
-char *cstm_getline(void);
+char *my_getline(void);
 char *cstm_strtok(char *str, const char *delim);
 char *cstm_non_interactive_getline(void);
 char *cstm_getenv(char *env_name);

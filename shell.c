@@ -27,7 +27,7 @@ int main(void)
 		       	case 1:
 				_printf("%s", prompt);
 				fflush(stdout);
-				getline_num = cstm_getline();
+				getline_num = my_getline();
 
 				if (getline_num == NULL)
 			       	{
