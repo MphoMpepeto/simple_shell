@@ -26,7 +26,7 @@ char *get_env(char *env_var)
 
 		len = _strlen(env_var);
 
-		if (cstm_strncmp(e_env, env_var, len) == 0 && e_env[len] == '=')
+		if (strn_cmp(e_env, env_var, len) == 0 && e_env[len] == '=')
 		{
 			return (&e_env[len + 1]);
 		}
