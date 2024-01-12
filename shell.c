@@ -54,7 +54,7 @@ int main(void)
     			continue;
 		}
 
-		argv = malloc(sizeof(char *) * (MAX_ARGS + 1));
+		argv = malloc(sizeof(char *) * (PEAK_ARGS + 1));
 
 		if (argv == NULL)
 		{
@@ -63,13 +63,13 @@ int main(void)
 		}
 
 		i = 0;
-		pokemon = cstm_strtok(getline_num, " \t\r\n\a");
+		pokemon = str_tok(getline_num, " \t\r\n\a");
 
-		while (pokemon != NULL && i < MAX_ARGS)
+		while (pokemon != NULL && i < PEAK_ARGS)
 		{
 			argv[i] = pokemon;
 			i++;
-			pokemon = cstm_strtok(NULL, " \t\r\n\a");
+			pokemon = str_tok(NULL, " \t\r\n\a");
 		}
 
 		argv[i] = NULL;

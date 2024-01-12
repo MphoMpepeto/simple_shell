@@ -43,7 +43,7 @@ void call_and_execute(char *args[], char *get_line_val)
 		else
 		{
 			char *path = cstm_getenv("PATH");
-			char *token = cstm_strtok(path, ":");
+			char *token = str_tok(path, ":");
 
 			while (token != NULL)
 			{
@@ -58,7 +58,7 @@ void call_and_execute(char *args[], char *get_line_val)
 					execve(executable_file, args, environ);
 				}
 
-				token = cstm_strtok(NULL, ":");
+				token = str_tok(NULL, ":");
 			}
 			_fprintf(stderr, "./hsh: %d: %s: not found\n", 1, args[0]);
 			free(get_line_val);
