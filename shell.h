@@ -12,10 +12,10 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-extern char **environ;
-
 #define INPUT_SIZE 1024
 #define PEAK_ARGS 1024
+
+extern char **environ;
 
 void yenza_command(char **argv, char *getline_num);
 int shell_setenv(const char *name, const char *value);
@@ -27,7 +27,7 @@ int shell_cd(const char *directory);
 void check_eof(char *buff);
 void print_error(void);
 void exec(char *args[], char *getline_num);
-char *cstm_getenv(char *env_name);
+char *get_env(char *env_var);
 void change_dir(char *cmd_args[], char *currt_wrk_dir);
 void cmd_seperator(char *get_line_val, char *currt_wrk_dir, char *user_prompt);
 int _printf(const char *format, ...);

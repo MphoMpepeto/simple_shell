@@ -40,7 +40,7 @@ void exec(char *args[], char *getline_num)
 		}
 		else
 		{
-			char *path = cstm_getenv("PATH");
+			char *path = get_env("PATH");
 			char *pokemon = str_tok(path, ":");
 
 			while (pokemon != NULL)
