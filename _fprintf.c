@@ -1,19 +1,18 @@
 #include "shell.h"
 
 /**
-* _fprintf - this function is written for the sole purpose of
-* handling the error output.
+* _err_printf - this function that handles error output.
 * @stream: file stream / file descriptor.
 * @format: format specifer arguments.
 *
 * Return: total length of characters printed.
 */
 
-int _fprintf(FILE *stream, const char *format, ...);
+int _err_printf(FILE *stream, const char *format, ...);
 
-int _fprintf(FILE *stream, const char *format, ...)
+int _err_printf(FILE *stream, const char *format, ...)
 {
-	int i;
+	int x;
 
 	int printed_chars = 0;
 
@@ -23,15 +22,15 @@ int _fprintf(FILE *stream, const char *format, ...)
 
 	va_start(specifier_args, format);
 
-	for (i = 0; format[i] != '\0'; i++)
+	for (x = 0; format[x] != '\0'; x++)
 	{
-		if (format[i] == '%')
+		if (format[x] == '%')
 		{
-			i += 1; /*move to the next character index*/
+			x += 1; 
 
 			if (format[i] == '%')
 			{
-				err_putchar('%');
+				error_printer('%');
 			}
 			else if (format[i] == 'c')
 			{
@@ -39,7 +38,7 @@ int _fprintf(FILE *stream, const char *format, ...)
 
 				if (c_val)
 				{
-					err_putchar(c_val);
+					error_printer(c_val);
 					printed_chars += 1;
 				}
 
@@ -54,7 +53,7 @@ int _fprintf(FILE *stream, const char *format, ...)
 
 				for (str_idx = 0; str_val[str_idx] != '\0'; str_idx++)
 				{
-					err_putchar(str_val[str_idx]);
+					error_printer(str_val[str_idx]);
 				}
 
 				while (*str_val != '\0')
@@ -77,7 +76,7 @@ int _fprintf(FILE *stream, const char *format, ...)
 					return (-1);
 				}
 
-				num_len = _integer_length(dec_val);
+				num_len = num_length(dec_val);
 
 				print_integer(dec_val);
 				printed_chars += num_len;
@@ -85,7 +84,7 @@ int _fprintf(FILE *stream, const char *format, ...)
 		}
 		else
 		{
-			err_putchar(format[i]);
+			error_printer(format[i]);
 			printed_chars += 1;
 		}
 	}
