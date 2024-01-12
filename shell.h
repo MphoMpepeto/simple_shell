@@ -32,11 +32,11 @@ void change_dir(char *cmd_args[], char *currt_wrk_dir);
 void cmd_seperator(char *get_line_val, char *currt_wrk_dir, char *user_prompt);
 int _printf(const char *format, ...);
 int _putchar(char c);
-int err_putchar(char c);
+int error_printer(char ch);
 int _strlen(char *str);
-void print_integer(int val);
+void output_int(int num);
 int _fprintf(FILE *stream, const char *format, ...);
-int _integer_length(int integer);
+int num_length(int num);
 int cstm_strncmp(char *str1, char *str2, int num);
 
 
