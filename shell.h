@@ -14,10 +14,10 @@
 
 extern char **environ;
 
-#define MAX_INPUT_SIZE 1024
+#define INPUT_SIZE 1024
 #define PEAK_ARGS 1024
 
-void execute_builtin_command(char **cmd_args, char *get_line_val);
+void yenza_command(char **argv, char *getline_num);
 int shell_setenv(const char *name, const char *value);
 int shell_unsetenv(const char *name);
 char *my_getline(void);
@@ -26,7 +26,7 @@ char *non_interactive_reader(void);
 int shell_cd(const char *directory);
 void check_eof(char *buff);
 void print_error(void);
-void call_and_execute(char *args[], char *get_line_val);
+void exec(char *args[], char *getline_num);
 char *cstm_getenv(char *env_name);
 void change_dir(char *cmd_args[], char *currt_wrk_dir);
 void cmd_seperator(char *get_line_val, char *currt_wrk_dir, char *user_prompt);

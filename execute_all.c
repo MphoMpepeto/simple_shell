@@ -1,75 +1,74 @@
 #include "shell.h"
 
 /**
- * execute_builtin_command - this function handles every logic
- * it checks for buitin commands and calls the executor function.
- * @cmd_args: this is the command arguments to be checked.
- * @get_line_val: this is the getline value argument to be freed.
+ * yenza_command - a function that checks logic and executes program.
+ * @argv: an array of command arguments.
+ * @getline_num: The getline argument.
  * Return: void
  */
 
-void execute_builtin_command(char **cmd_args, char *get_line_val);
+void yenza_command(char **argv, char *getline_num);
 
-void execute_builtin_command(char **cmd_args, char *get_line_val)
+void yenza_command(char **argv, char *getline_num)
 {
-	char executable_file[MAX_INPUT_SIZE];
+	char exec_doc[INPUT_SIZE];
 
-	char *file_path = "/bin/";
+	char *_path = "/bin/";
 
-	if (strcmp(cmd_args[0], "exit") == 0)
+	if (strcmp(argv[0], "exit") == 0)
 	{
-		if (cmd_args[1] != NULL)
+		if (argv[1] != NULL)
 		{
-			char *endptr;
+			char *end_ptr;
 
-			long status = strtol(cmd_args[1], &endptr, 10);
+			long status = strtol(argv[1], &end_ptr, 10);
 
-			if (strcmp(cmd_args[1], "-98") == 0)
+			if (strcmp(argv[1], "-98") == 0)
 			{
-				char *a = cmd_args[0];
+				char *k = argv[0];
 
-				char *b = cmd_args[1];
+				char *l = argv[1];
 
-				int n = 1;
+				int j = 1;
 
-				char *ms = "./hsh: %d: %s: Illegal number: %s\n";
+				char *msg = "./hsh: %d: %s: Illegal number: %s\n";
 
-				_fprintf(stderr, ms, n, a, b);
-				free(get_line_val);
-				free(cmd_args);
+				_fprintf(stderr, msg, j, k, l);
+				free(getline_num);
+				free(argv);
 				exit(2);
 			}
 
-			if (*endptr == '\0')
+			if (*end_ptr == '\0')
 			{
-				free(get_line_val);
-				free(cmd_args);
+				free(getline_num);
+				free(argv);
 				exit(status);
 			}
 			else
 			{
-				char *a = cmd_args[0];
+				char *k = argv[0];
 
-				char *b = cmd_args[1];
+				char *l = argv[1];
 
-				int n = 1;
+				int j = 1;
 
-				char *ms = "./hsh: %d: %s: Illegal number: %s\n";
+				char *msg = "./hsh: %d: %s: Illegal number: %s\n";
 
-				_fprintf(stderr, ms, n, a, b);
-				free(get_line_val);
-				free(cmd_args);
+				_fprintf(stderr, msg, j, k, l);
+				free(getline_num);
+				free(argv);
 				exit(2);
 			}
 		}
 		else
 		{
-			free(get_line_val);
-			free(cmd_args);
+			free(getline_num);
+			free(argv);
 			exit(0);
 		}
 	}
-	else if (strcmp(cmd_args[0], "env") == 0)
+	else if (strcmp(argv[0], "env") == 0)
 	{
 		char **env;
 
@@ -78,58 +77,58 @@ void execute_builtin_command(char **cmd_args, char *get_line_val)
 			_printf("%s\n", *env);
 		}
 	}
-	else if (strcmp(cmd_args[0], "setenv") == 0)
+	else if (strcmp(argv[0], "setenv") == 0)
 	{
 		/*Logic to be implemented*/
 	}
-	else if (strcmp(cmd_args[0], "unsetenv") == 0)
+	else if (strcmp(argv[0], "unsetenv") == 0)
 	{
 		/*Logic to be implemented*/
 	}
-	else if (strcmp(cmd_args[0], "cd") == 0)
+	else if (strcmp(argv[0], "cd") == 0)
 	{
 		/*Logic to be implemented*/
 	}
-	else if (strcmp(cmd_args[0], "#") == 0)
+	else if (strcmp(argv[0], "#") == 0)
 	{
 		/* This is a comment, do nothing*/
 	}
 	else
 	{
-		if (strchr(cmd_args[0], '/') != NULL) /*USer entered full path*/
+		if (strchr(argv[0], '/') != NULL)
 		{
-			if (access(cmd_args[0], X_OK) != -1)
+			if (access(argv[0], X_OK) != -1)
 			{
-				call_and_execute(cmd_args, get_line_val);
+				exec(argv, getline_num);
 			}
 			else
 			{
 				int n = 1;
 
-				char *ms = "./hsh: %d: %s: not found\n";
+				char *msg = "./hsh: %d: %s: not found\n";
 
-				_fprintf(stderr, ms, n, cmd_args[0]);
-				free(get_line_val);
-				free(cmd_args);
+				_fprintf(stderr, msg, n, argv[0]);
+				free(getline_num);
+				free(argv);
 				exit(127);
 			}
 		}
-		else /*User entered the file name*/
+		else 
 		{
-			strcpy(executable_file, file_path);
-			strcat(executable_file, cmd_args[0]);
+			strcpy(exec_doc, _path);
+			strcat(exec_doc, argv[0]);
 
-			if (access(executable_file, X_OK) != -1)
+			if (access(exec_doc, X_OK) != -1)
 			{
-				call_and_execute(cmd_args, get_line_val);
+				exec(argv, getline_num);
 			}
 			else
 			{
-				char *ms = "./hsh: %d: %s: not found\n";
+				char *msg = "./hsh: %d: %s: not found\n";
 
-				_fprintf(stderr, ms, 1, cmd_args[0]);
-				free(get_line_val);
-				free(cmd_args);
+				_fprintf(stderr, msg, 1, argv[0]);
+				free(getline_num);
+				free(argv);
 				exit(127);
 			}
 		}

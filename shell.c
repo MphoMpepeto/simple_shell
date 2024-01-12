@@ -82,7 +82,7 @@ int main(void)
 			continue;
 		}
 
-		execute_builtin_command(argv, getline_num);
+		yenza_command(argv, getline_num);
 
 		free(getline_num);
 		free(argv);
