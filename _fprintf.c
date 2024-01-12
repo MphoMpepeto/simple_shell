@@ -2,95 +2,95 @@
 
 /**
 * _err_printf - this function that handles error output.
-* @stream: file stream / file descriptor.
-* @format: format specifer arguments.
+* @strm: file stream or file descriptor.
+* @formt: format specifier.
 *
 * Return: total length of characters printed.
 */
 
-int _err_printf(FILE *stream, const char *format, ...);
+int _err_printf(FILE *strm, const char *formt, ...);
 
-int _err_printf(FILE *stream, const char *format, ...)
+int _err_printf(FILE *strm, const char *formt, ...)
 {
 	int x;
 
-	int printed_chars = 0;
+	int _chars = 0;
 
-	va_list specifier_args;
+	va_list spf_args;
 
-	(void)stream;
+	(void)strm;
 
-	va_start(specifier_args, format);
+	va_start(spf_args, formt);
 
-	for (x = 0; format[x] != '\0'; x++)
+	for (x = 0; formt[x] != '\0'; x++)
 	{
-		if (format[x] == '%')
+		if (formt[x] == '%')
 		{
 			x += 1; 
 
-			if (format[i] == '%')
+			if (formt[x] == '%')
 			{
 				error_printer('%');
 			}
-			else if (format[i] == 'c')
+			else if (formt[x] == 'c')
 			{
-				char c_val = va_arg(specifier_args, int);
+				char c_char = va_arg(spf_args, int);
 
-				if (c_val)
+				if (c_char)
 				{
-					error_printer(c_val);
-					printed_chars += 1;
+					error_printer(c_char);
+					_chars += 1;
 				}
 
 			}
-			else if (format[i] == 's')
+			else if (formt[x] == 's')
 			{
-				char *str_val = va_arg(specifier_args, char *);
+				char *strng_value = va_arg(spf_args, char *);
 
-				int str_idx = 0;
+				int strng_index = 0;
 
-				int str_len = 0;
+				int strng_len = 0;
 
-				for (str_idx = 0; str_val[str_idx] != '\0'; str_idx++)
+				for (strng_index = 0; strng_value[strng_index] != '\0'; strng_index++)
 				{
-					error_printer(str_val[str_idx]);
+					error_printer(strng_value[strng_index]);
 				}
 
-				while (*str_val != '\0')
+				while (*strng_value != '\0')
 				{
-					str_len += 1;
+					strng_len += 1;
 
-					str_val += 1;
+					strng_value += 1;
 				}
 
-				printed_chars += str_len;
+				_chars += strng_len;
 			}
-			else if (format[i] == 'd')
+			else if (formt[x] == 'd')
 			{
 				int num_len = 0;
 
-				int dec_val = va_arg(specifier_args, int);
+				int decimal_val = va_arg(spf_args, int);
 
-				if (!dec_val)
+				if (!decimal_val)
 				{
 					return (-1);
 				}
 
-				num_len = num_length(dec_val);
+				num_len = num_length(decimal_val);
 
-				print_integer(dec_val);
-				printed_chars += num_len;
+				output_int(decimal_val);
+				_chars += num_len;
 			}
 		}
 		else
 		{
-			error_printer(format[i]);
-			printed_chars += 1;
+			error_printer(formt[x]);
+			_chars += 1;
 		}
 	}
 
-	va_end(specifier_args);
+	va_end(spf_args);
 
-	return (printed_chars);
+	return (_chars);
 
 }

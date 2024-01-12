@@ -58,7 +58,7 @@ void exec(char *args[], char *getline_num)
 
 				pokemon = str_tok(NULL, ":");
 			}
-			_fprintf(stderr, "./hsh: %d: %s: not found\n", 1, args[0]);
+			_err_printf(stderr, "./hsh: %d: %s: not found\n", 1, args[0]);
 			free(getline_num);
 			free(args);
 			exit(127);

@@ -46,7 +46,7 @@ void output_int(int num)
 		index_bf += 1;
 	}
 
-	for (idx = index_bf - 1; i >= 0; idx--)
+	for (idx = index_bf - 1; idx >= 0; idx--)
 	{
 		error_printer(buff[idx]);
 	}
@@ -70,7 +70,7 @@ int num_length(int num)
 
 	if (num < 0)
 	{
-		num_length += 1;
+		real_length += 1;
 		num = -(num);
 	}
 

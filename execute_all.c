@@ -33,7 +33,7 @@ void yenza_command(char **argv, char *getline_num)
 
 				char *msg = "./hsh: %d: %s: Wrong number: %s\n";
 
-				_fprintf(stderr, msg, j, k, l);
+				_err_printf(stderr, msg, j, k, l);
 				free(getline_num);
 				free(argv);
 				exit(2);
@@ -55,7 +55,7 @@ void yenza_command(char **argv, char *getline_num)
 
 				char *msg = "./hsh: %d: %s: Illegal number: %s\n";
 
-				_fprintf(stderr, msg, j, k, l);
+				_err_printf(stderr, msg, j, k, l);
 				free(getline_num);
 				free(argv);
 				exit(2);
@@ -107,7 +107,7 @@ void yenza_command(char **argv, char *getline_num)
 
 				char *msg = "./hsh: %d: %s: not found\n";
 
-				_fprintf(stderr, msg, n, argv[0]);
+				_err_printf(stderr, msg, n, argv[0]);
 				free(getline_num);
 				free(argv);
 				exit(127);
@@ -126,7 +126,7 @@ void yenza_command(char **argv, char *getline_num)
 			{
 				char *msg = "./hsh: %d: %s: not found\n";
 
-				_fprintf(stderr, msg, 1, argv[0]);
+				_err_printf(stderr, msg, 1, argv[0]);
 				free(getline_num);
 				free(argv);
 				exit(127);

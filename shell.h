@@ -35,7 +35,7 @@ int _putchar(char c);
 int error_printer(char ch);
 int _strlen(char *str);
 void output_int(int num);
-int _fprintf(FILE *stream, const char *format, ...);
+int _err_printf(FILE *strm, const char *formt, ...);
 int num_length(int num);
 int cstm_strncmp(char *str1, char *str2, int num);
 
