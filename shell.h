@@ -37,7 +37,7 @@ int _strlen(char *str);
 void output_int(int num);
 int _err_printf(FILE *strm, const char *formt, ...);
 int num_length(int num);
-int cstm_strncmp(char *str1, char *str2, int num);
+int strn_cmp(char *strA, char *strB, int val);
 
 
 #endif
