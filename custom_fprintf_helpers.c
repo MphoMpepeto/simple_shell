@@ -1,84 +1,83 @@
 #include "shell.h"
 
 /**
-* err_putchar - this function prints a single character to the standard
-* error.
-* @c: character to be printed to stderr
-* Return: printed character.
+* error_printer - Print error to stdoutput
+* @ch: character to be printed to stderr
+* Return: character.
 */
 
-int err_putchar(char c)
+int error_printer(char ch)
 {
-	return (write(STDERR_FILENO, &c, 1));
+	return (write(STDERR_FILENO, &ch, 1));
 }
 
 /**
-* print_integer - this function prints and interger with err_putchar.
-* @val: integer to be printed.
+* output_int - print interger.
+* @num: number to be printed.
 * Return: void
 */
 
-void print_integer(int val)
+void output_int(int num)
 {
-	int buf_idx = 0;
+	int idx;
 
-	int i;
+	int index_bf = 0;
 
-	char buffer[12];
+	char buff[12];
 
-	if (val < 0)
+	if (num < 0)
 	{
-		err_putchar('-');
-		val = -(val);
+		error_printer('-');
+		num = -(num);
 	}
 
-	if (val == 0)
+	if (num == 0)
 	{
-		err_putchar('0');
+		error_printer('0');
 		return;
 	}
 
-	while (val > 0)
+	while (num > 0)
 	{
-		buffer[buf_idx] = '0' + (val % 10);
+		buff[index_bf] = '0' + (num % 10);
 
-		val /= 10;
+		num /= 10;
 
-		buf_idx += 1;
+		index_bf += 1;
 	}
 
-	for (i = buf_idx - 1; i >= 0; i--)
+	for (idx = index_bf - 1; i >= 0; idx--)
 	{
-		err_putchar(buffer[i]);
+		error_printer(buff[idx]);
 	}
 }
 
 
 /**
-* _integer_length - this function counts the length of an integer.
-* @integer: integer length to be counted.
-* Return: lenght of the integer.
+* num_length - count length of integer.
+* @num: integer length to count.
+* Return: lenght of integer.
 */
 
-int _integer_length(int integer)
+int num_length(int num)
 {
-	int actual_length = 0;
+	int real_length = 0;
 
-	if (integer == 0)
+	if (num == 0)
 	{
 		return (1);
 	}
 
-	if (integer < 0)
+	if (num < 0)
 	{
-		actual_length += 1;
-		integer = -(integer);
+		num_length += 1;
+		num = -(num);
 	}
 
 	do {
-		actual_length += 1;
-		integer /= 10;
-	} while (integer > 0);
+		real_length += 1;
+		num /= 10;
+	} while (num > 0);
 
-	return (actual_length);
+	return (real_length);
 }

@@ -31,7 +31,7 @@ void yenza_command(char **argv, char *getline_num)
 
 				int j = 1;
 
-				char *msg = "./hsh: %d: %s: Illegal number: %s\n";
+				char *msg = "./hsh: %d: %s: Wrong number: %s\n";
 
 				_fprintf(stderr, msg, j, k, l);
 				free(getline_num);
