@@ -1,21 +1,21 @@
 #include "shell.h"
 
 /**
-* _strlen - this funtion returns the lenght of a string.
-* @str: string array to be counted.
-* Return: Lenght of the string.
+* _strlen - a funtion that determines the len of a string.
+* @strng: string with chars to be counted.
+* Return: Length of the string.
 */
 
-int _strlen(char *str)
+int _strlen(char *strng)
 {
-	int len_counter = 0;
+	int length = 0;
 
-	while (*str != '\0')
+	while (*strng != '\0')
 	{
-		len_counter += 1;
+		length += 1;
 
-		str += 1;
+		strng += 1;
 	}
 
-	return (len_counter);
+	return (length);
 }
