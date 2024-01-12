@@ -25,7 +25,7 @@ int main(void)
 		switch (interactive_mode) 
 		{
 		       	case 1:
-				_printf("%s", prompt);
+				she_prints("%s", prompt);
 				fflush(stdout);
 				getline_num = my_getline();
 
@@ -86,11 +86,6 @@ int main(void)
 
 		free(getline_num);
 		free(argv);
-
-	      /*if (!interactive_shell)
-		{
-			break;
-		} */
 	}
 
 	return (0);

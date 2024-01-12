@@ -30,7 +30,7 @@ void exec(char *args[], char *getline_num);
 char *get_env(char *env_var);
 void change_dir(char *cmd_args[], char *currt_wrk_dir);
 void cmd_seperator(char *get_line_val, char *currt_wrk_dir, char *user_prompt);
-int _printf(const char *format, ...);
+int she_prints(const char *formt, ...);
 int _putchar(char c);
 int error_printer(char ch);
 int _strlen(char *str);

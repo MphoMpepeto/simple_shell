@@ -74,7 +74,7 @@ void yenza_command(char **argv, char *getline_num)
 
 		for (env = environ; *env != NULL; env++)
 		{
-			_printf("%s\n", *env);
+			she_prints("%s\n", *env);
 		}
 	}
 	else if (strcmp(argv[0], "setenv") == 0)
