@@ -9,83 +9,102 @@ int main(void);
 
 int main(void)
 {
-	char *getline_num, *pokemon, *prompt = "(Tom Mpho)$ ";
+	bool interactive_shell;
 
-	char **argv;
+	char *get_line_val;
 
-	int i;
+	char **cmd_args;
 
-	int interactive_mode = isatty(fileno(stdin));
-	
-	char* semicolon_position;
+	char *token;
+
+	int arg_idx;
+
+	char *usr_prmpt = "(Genius Excel)$ ";
+
+	interactive_shell = isatty(fileno(stdin));
 
 
-	while (true)
+	while (1)
 	{
-		switch (interactive_mode) 
+
+		/*check for interactive shell mode*/
+		if (interactive_shell)
 		{
-		       	case 1:
-				she_prints("%s", prompt);
-				fflush(stdout);
-				getline_num = my_getline();
+			she_prints("%s", usr_prmpt);
 
-				if (getline_num == NULL)
-			       	{
-					break;
-        			}
-       				 break;
+			fflush(stdout);
 
-    			case 0:
-        			getline_num = non_interactive_reader();
-			       
-				if (getline_num == NULL) {
-            				break;
-        			}
-        			break;
+			get_line_val = cstm_getline();
 
-    			default:
-        			break;
+			if (get_line_val == NULL)
+			{
+				break; /*Exit interactive mode*/
+			}
+
+			/*printf("(Favour Shell)%s$ ", currt_wrk_dir); */
+		}
+		else /*Indicates shell is in non-interactive mode*/
+		{
+			get_line_val = cstm_non_interactive_getline();
+
+			if (get_line_val == NULL) /*Exit non-interactive mode*/
+			{
+				/*Close file and exit the non-interacitve mode*/
+
+				break; /*Switche to interactive shell mode*/
+			}
 		}
 
-		semicolon_position = strstr(getline_num, ";");
+		/*Check if multiple commands were enetered*/
+		if (strstr(get_line_val, ";") != NULL)
+		{
+			/*			cmd_seperator(get_line_val, currt_wrk_dir, usr_prmpt);*/
 
-		if (semicolon_position != NULL) {
-    			free(getline_num);
-    			continue;
+			free(get_line_val);
+			continue;
 		}
+		/*Dynamically Allocate memory for the arguments to be executed*/
+		cmd_args = malloc(sizeof(char *) * (PEAK_ARGS + 1));
 
-		argv = malloc(sizeof(char *) * (PEAK_ARGS + 1));
-
-		if (argv == NULL)
+		if (cmd_args == NULL)
 		{
 			perror("Failed to Allocate Memory");
 			exit(EXIT_FAILURE);
 		}
 
-		i = 0;
-		pokemon = str_tok(getline_num, " \t\r\n\a");
 
-		while (pokemon != NULL && i < PEAK_ARGS)
+		arg_idx = 0;
+
+		token = str_tok(get_line_val, " \t\r\n\a");
+
+		while (token != NULL && arg_idx < PEAK_ARGS)
 		{
-			argv[i] = pokemon;
-			i++;
-			pokemon = str_tok(NULL, " \t\r\n\a");
+			cmd_args[arg_idx] = token;
+
+			arg_idx++;
+
+			token = str_tok(NULL, " \t\r\n\a");
 		}
 
-		argv[i] = NULL;
+		cmd_args[arg_idx] = NULL;
 
-		if (i == 0)
+		if (arg_idx == 0)
 		{
-			free(getline_num);
-			free(argv);
+			free(get_line_val);
+			free(cmd_args);
 
 			continue;
 		}
 
-		yenza_command(argv, getline_num);
+		yenza_command(cmd_args, get_line_val);
 
-		free(getline_num);
-		free(argv);
+		free(get_line_val);
+		free(cmd_args);
+
+		if (!interactive_shell)
+		{
+			break;
+		}
 	}
 
 	return (0);
