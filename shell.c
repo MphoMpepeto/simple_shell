@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * main - this is the main function for my shell program.
+ * main - the entry point shell program.
  * Return: 0 on sucess.
  */
 
@@ -9,99 +9,93 @@ int main(void);
 
 int main(void)
 {
-	bool interactive_shell;
+	bool interactive_mode;
 
-	char *get_line_val;
+	char *getline_num;
 
-	char **cmd_args;
+	char **argv;
 
-	char *token;
+	char *pokemon;
 
-	int arg_idx;
+	int i;
 
-	char *usr_prmpt = "(Genius Excel)$ ";
+	char *prompt = "(Simple Hell)$ ";
 
-	interactive_shell = isatty(fileno(stdin));
+	interactive_mode = isatty(fileno(stdin));
 
 
 	while (1)
 	{
 
-		/*check for interactive shell mode*/
-		if (interactive_shell)
+		if (interactive_mode)
 		{
-			she_prints("%s", usr_prmpt);
+			she_prints("%s", prompt);
 
 			fflush(stdout);
 
-			get_line_val = cstm_getline();
+			getline_num = my_getline();
 
-			if (get_line_val == NULL)
+			if (getline_num == NULL)
 			{
-				break; /*Exit interactive mode*/
+				break;
 			}
 
-			/*printf("(Favour Shell)%s$ ", currt_wrk_dir); */
 		}
-		else /*Indicates shell is in non-interactive mode*/
+		else
 		{
-			get_line_val = cstm_non_interactive_getline();
+			getline_num = non_interactive_reader();
 
-			if (get_line_val == NULL) /*Exit non-interactive mode*/
+			if (getline_num == NULL)
 			{
-				/*Close file and exit the non-interacitve mode*/
 
-				break; /*Switche to interactive shell mode*/
+				break;
 			}
 		}
 
-		/*Check if multiple commands were enetered*/
-		if (strstr(get_line_val, ";") != NULL)
+		if (strstr(getline_num, ";") != NULL)
 		{
-			/*			cmd_seperator(get_line_val, currt_wrk_dir, usr_prmpt);*/
 
-			free(get_line_val);
+			free(getline_num);
 			continue;
 		}
-		/*Dynamically Allocate memory for the arguments to be executed*/
-		cmd_args = malloc(sizeof(char *) * (PEAK_ARGS + 1));
+		argv = malloc(sizeof(char *) * (PEAK_ARGS + 1));
 
-		if (cmd_args == NULL)
+		if (argv == NULL)
 		{
 			perror("Failed to Allocate Memory");
 			exit(EXIT_FAILURE);
 		}
 
 
-		arg_idx = 0;
+		i = 0;
 
-		token = str_tok(get_line_val, " \t\r\n\a");
+		pokemon = str_tok(getline_num, " \t\r\n\a");
 
-		while (token != NULL && arg_idx < PEAK_ARGS)
+		while (pokemon != NULL && i < PEAK_ARGS)
 		{
-			cmd_args[arg_idx] = token;
+			argv[i] = pokemon;
 
-			arg_idx++;
+			i++;
 
-			token = str_tok(NULL, " \t\r\n\a");
+			pokemon = str_tok(NULL, " \t\r\n\a");
 		}
 
-		cmd_args[arg_idx] = NULL;
+		argv[i] = NULL;
 
-		if (arg_idx == 0)
+		if (i == 0)
 		{
-			free(get_line_val);
-			free(cmd_args);
+			free(getline_num);
+			free(argv);
 
 			continue;
 		}
 
-		yenza_command(cmd_args, get_line_val);
+		yenza_command(argv, getline_num);
 
-		free(get_line_val);
-		free(cmd_args);
+		free(getline_num);
+		free(argv);
 
-		if (!interactive_shell)
+		if (!interactive_mode)
 		{
 			break;
 		}
