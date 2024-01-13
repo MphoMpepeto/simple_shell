@@ -79,15 +79,37 @@ void yenza_command(char **argv, char *getline_num)
 	}
 	else if (strcmp(argv[0], "setenv") == 0)
 	{
-		/*Logic to be implemented*/
+		if (argv[1] == NULL || argv[2] == NULL || argv[3] != NULL)
+		{
+			_err_printf(stderr, "Usage: setenv VARIABLE VALUE\n");
+			return ;
+		}
+		if (setenv(argv[1], argv[2], 1) != 0)
+		{
+			perror("setenv");
+		}
 	}
 	else if (strcmp(argv[0], "unsetenv") == 0)
 	{
-		/*Logic to be implemented*/
+		if (argv[1] == NULL || argv[2] != NULL)
+		{
+			_err_printf(stderr, "Usage: unsetenv VARIABLE\n");
+			return ;
+		}
+		if (unsetenv(argv[1]) != 0)
+		{
+			perror("unsetenv");
+		}
 	}
 	else if (strcmp(argv[0], "cd") == 0)
 	{
-		/*Logic to be implemented*/
+		const char *dir;
+
+		dir = (argv[1] != NULL) ? argv[1] : getenv("HOME");
+		if (change_dir(dir) != 0)
+		{
+			_err_printf(stderr, "cd: %s: No such direectory\n", dir);
+		}
 	}
 	else if (strcmp(argv[0], "#") == 0)
 	{

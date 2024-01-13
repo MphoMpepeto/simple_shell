@@ -26,7 +26,6 @@ char *non_interactive_reader(void);
 int shell_cd(const char *directory);
 void exec(char *args[], char *getline_num);
 char *get_env(char *env_var);
-void change_dir(char *cmd_args[], char *currt_wrk_dir);
 void cmd_seperator(char *get_line_val, char *currt_wrk_dir, char *user_prompt);
 int she_prints(const char *formt, ...);
 int _putchar(char c);
@@ -36,6 +35,6 @@ void output_int(int num);
 int _err_printf(FILE *strm, const char *formt, ...);
 int num_length(int num);
 int strn_cmp(char *strA, char *strB, int val);
-
+int change_dir(const char *dir);
 
 #endif
