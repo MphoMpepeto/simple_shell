@@ -15,10 +15,6 @@ void yenza_command(char **argv, char *getline_num)
 
 	char *_path = "/bin/";
 
-	if (argv[0][0] == '#')
-	{
-		return ;
-	}
 	if (strcmp(argv[0], "exit") == 0)
 	{
 		if (argv[1] != NULL)
@@ -113,6 +109,13 @@ void yenza_command(char **argv, char *getline_num)
 		if (change_dir(dir) != 0)
 		{
 			_err_printf(stderr, "cd: %s: No such direectory\n", dir);
+		}
+	}
+	else if (strcmp(argv[0], "#") == 0)
+	{
+		if (argv[0][0] == '#')
+		{
+                	return ;
 		}
 	}
 	else
